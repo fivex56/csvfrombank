@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Convert a Bank of America statement PDF to Excel or CSV - without uploading it | CSV from Bank</title>
+<meta name="description" content="Bank of America statements arrive as PDF, split into deposits, withdrawals and fees. This page turns them into one clean table in your browser - the file s">
+<link rel="canonical" href="https://csvfrombank.com/bank/bank-of-america.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128202;</text></svg>">
+<link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap bar">
+    <a class="logo" href="../index.html"><span class="mark">&#8646;</span> CSV from Bank</a>
+    <nav>
+      <a href="../index.html#how">How it works</a>
+      <a href="../index.html#privacy">Privacy</a>
+      <a href="../index.html#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="hero wrap">
+  <div class="badge" id="netBadge"><span class="dot"></span> <span id="netText">Runs entirely in your browser</span></div>
+  <h1>Convert a Bank of America statement PDF to Excel or CSV <span class="nowrap">without uploading it</span></h1>
+  <p class="lede">Bank of America statements arrive as PDF, split into deposits, withdrawals and fees. This page turns them into one clean table in your browser - the file stays on your computer.</p>
+
+  <div id="drop" class="drop">
+    <input type="file" id="file" accept="application/pdf,.pdf" hidden>
+    <div class="drop-inner">
+      <div class="drop-icon">&#128196;</div>
+      <div class="drop-title">Drop your Bank of America statement here</div>
+      <div class="drop-sub">or <button class="link" id="pick" type="button">choose a file</button> &middot; nothing is uploaded</div>
+    </div>
+  </div>
+  <div class="try">No Bank of America statement handy? Try a sample:
+    <button class="link" data-sample="../tests/fixtures/us_checking.pdf">US checking account</button> &middot;
+    <button class="link" data-sample="../tests/fixtures/uk_current.pdf">UK current account</button>
+  </div>
+</section>
+
+<section id="result" class="wrap result" hidden>
+  <div class="rhead">
+    <div>
+      <h2 id="rtitle">Your statement</h2>
+      <div class="rmeta" id="rmeta"></div>
+    </div>
+    <div class="ractions">
+      <button class="btn primary" id="dlXlsx">Download Excel</button>
+      <button class="btn" id="dlCsv">Download CSV</button>
+      <button class="btn" id="dlQbo">CSV for QuickBooks</button>
+      <button class="btn ghost" id="again">Convert another</button>
+    </div>
+  </div>
+  <div id="checks" class="checks"></div>
+  <details class="tune" id="tune">
+    <summary>Something looks wrong? Adjust it here</summary>
+    <div class="tune-body">
+      <label>Date format
+        <select id="optDate">
+          <option value="">Detect automatically</option>
+          <option value="MD">Month / Day (US)</option>
+          <option value="DM">Day / Month (UK, EU)</option>
+        </select>
+      </label>
+      <label>Balance column
+        <select id="optBalance"><option value="">Detect automatically</option></select>
+      </label>
+      <label class="check"><input type="checkbox" id="optInvert"> Flip + and - signs</label>
+      <div class="tune-note">These settings re-read the same file on your computer. Nothing is sent anywhere.</div>
+    </div>
+  </details>
+  <div class="tablewrap"><table id="tbl"></table></div>
+  <div class="rfoot" id="rfoot"></div>
+</section>
+
+<section class="wrap band">
+  <h2>How to get the PDF from Bank of America</h2>
+  <ol class="steps">
+    <li>Sign in at bankofamerica.com and open the account.</li>
+    <li>Go to Statements and Documents and download the PDF.</li>
+    <li>Drop that file into the box above.</li>
+  </ol>
+</section>
+
+<section class="wrap band">
+  <h2>What a Bank of America statement looks like inside</h2>
+  <p class="lede">This is the part most converters get wrong, so it is worth knowing what happens to your file.</p>
+  <ul class="ticks">
+    <li>Transactions are grouped into sections - deposits, withdrawals, checks, fees - each with its own small table.</li>
+    <li>Dates are MM/DD/YY, and descriptions frequently run onto a second line.</li>
+    <li>Section subtotals and the page footers are skipped, so they do not turn into fake transactions in your spreadsheet.</li>
+  </ul>
+  <div class="proof"><b>Checked, not claimed:</b> Tested on the official Bank of America sample statement: transaction rows are picked up, and the converter says plainly that there is no running balance to verify against rather than pretending it is sure.</div>
+  <p class="lede" style="margin-top:16px">Bank of America can also export CSV directly from online banking for recent periods. If that option is there, use it - it is the bank&#x27;s own data. This page is for the months where only the PDF is left.</p>
+</section>
+
+<section class="wrap band">
+  <h2>Other banks</h2>
+  <p class="lede">The converter reads the layout of the document itself, so it is not limited to these - but these have their own page:</p>
+  <p class="banklinks"><a href="chase.html">Chase</a> &middot; <a href="hsbc.html">HSBC</a> &middot; <a href="amex.html">American Express</a></p>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p>CSV from Bank - convert bank statement PDFs to Excel and CSV without uploading them.</p>
+    <p class="fine">Not affiliated with Bank of America. Bank of America and its logo are trademarks of their owner. Always check the converted numbers against your original statement before using them for accounting or tax.</p>
+  </div>
+</footer>
+
+<script src="../vendor/pdf.min.js"></script>
+<script src="../vendor/xlsx.full.min.js"></script>
+<script src="../js/parse.js"></script>
+<script>window.APP_BASE = '../';</script>
+<script src="../js/app.js"></script>
+</body>
+</html>
