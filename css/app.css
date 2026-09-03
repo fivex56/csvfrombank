@@ -120,3 +120,9 @@ footer .fine{font-size:13px;margin-top:6px;max-width:80ch}
 .banklinks{font-size:17px;color:var(--dim);margin-top:6px}
 .banklinks a{font-weight:600}
 .nowrap{white-space:nowrap}
+
+/* В секциях текст должен идти от левого края, как заголовок: auto-центрирование
+   из главного экрана здесь смотрится как случайный отступ. */
+.band .lede{margin-left:0}
+.band .lede + .lede{margin-top:12px}
+h1.wide{max-width:24ch}

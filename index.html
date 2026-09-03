@@ -5,9 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bank statement PDF to CSV and Excel - CSV from Bank</title>
 <meta name="description" content="Convert a bank statement PDF to CSV or Excel. Runs in your browser - the file is never uploaded. Checks its own work against the running balance. Pay per file, no subscription.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://csvfrombank.com/">
+<meta property="og:title" content="Bank statement PDF to CSV - converted in your browser">
+<meta property="og:description" content="Your statement never leaves your computer, and the converter checks its own arithmetic against the running balance before you download.">
+<meta property="og:site_name" content="CSV from Bank">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bank statement PDF to CSV - converted in your browser">
+<meta name="twitter:description" content="Nothing is uploaded. The converter proves the numbers add up before you download.">
 <link rel="canonical" href="https://csvfrombank.com/">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
 <link rel="stylesheet" href="css/app.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Which banks are supported?","acceptedAnswer":{"@type":"Answer","text":"There are no per-bank templates - the converter reads the layout of the document itself, so most text-based statements work: US, UK, EU, Canada and Australia. Chase, HSBC, Bank of America and American Express have their own pages with format notes."}},
+{"@type":"Question","name":"Is my bank statement uploaded anywhere?","acceptedAnswer":{"@type":"Answer","text":"No. The conversion runs inside your browser. There is no server to send the file to - you can disconnect from the internet and it still works."}},
+{"@type":"Question","name":"How accurate is the conversion?","acceptedAnswer":{"@type":"Answer","text":"When the statement has a running balance, the tool verifies itself: previous balance plus amount must equal the current balance on every row. The result of that check is shown before you download. Where it cannot verify, it says so."}},
+{"@type":"Question","name":"Can I import the result into QuickBooks or Xero?","acceptedAnswer":{"@type":"Answer","text":"Yes. The CSV for QuickBooks button writes the narrow three-column format those tools expect: date, description, amount, with no balance column and no currency symbols."}},
+{"@type":"Question","name":"Does it read scanned statements?","acceptedAnswer":{"@type":"Answer","text":"Not yet. Scans need OCR, which is planned. Download the PDF version from online banking instead of scanning a paper copy."}}]}
+</script>
 </head>
 <body>
 
@@ -29,7 +45,7 @@
   <div class="badge" id="netBadge" title="This page makes no network calls while converting">
     <span class="dot"></span> <span id="netText">Runs entirely in your browser</span>
   </div>
-  <h1>Bank statement PDF into a spreadsheet - and proof the numbers are right</h1>
+  <h1 class="wide">Bank statement PDF into a spreadsheet - with proof the numbers are right</h1>
   <p class="lede">Drop the PDF below and get dates, descriptions, amounts and balance as CSV or Excel.
   Two things make this different: your file <b>never leaves your computer</b>, and the converter
   <b>checks its own work</b> against the running balance before you download anything.</p>
