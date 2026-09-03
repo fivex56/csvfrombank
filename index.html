@@ -15,7 +15,7 @@
 <meta name="twitter:description" content="Nothing is uploaded. The converter proves the numbers add up before you download.">
 <link rel="canonical" href="https://csvfrombank.com/">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
-<link rel="stylesheet" href="css/app.css?v=19da8a47">
+<link rel="stylesheet" href="css/app.css?v=a888e0e5">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"Which banks are supported?","acceptedAnswer":{"@type":"Answer","text":"There are no per-bank templates - the converter reads the layout of the document itself, so most text-based statements work: US, UK, EU, Canada and Australia. Chase, HSBC, Bank of America and American Express have their own pages with format notes."}},
@@ -36,32 +36,58 @@
       <a href="#privacy">Privacy</a>
       <a href="#faq">FAQ</a>
     </nav>
+    <button class="themebtn" id="themeBtn" title="Switch light / dark" aria-label="Switch light or dark theme">☾</button>
   </div>
 </header>
 
 <main id="top">
 
 <section class="hero wrap">
-  <div class="badge" id="netBadge" title="This page makes no network calls while converting">
-    <span class="dot"></span> <span id="netText">Runs entirely in your browser</span>
-  </div>
-  <h1 class="wide">Bank statement PDF into a spreadsheet - with proof the numbers are right</h1>
-  <p class="lede">Drop the PDF below and get dates, descriptions, amounts and balance as CSV or Excel.
-  Two things make this different: your file <b>never leaves your computer</b>, and the converter
-  <b>checks its own work</b> against the running balance before you download anything.</p>
+  <h1>Bank Statement Converter</h1>
+  <p class="sub">PDF to Excel or CSV, right in your browser.</p>
+
+  <ul class="promises">
+    <li>Free</li>
+    <li>No sign-up</li>
+    <li>Nothing uploaded</li>
+    <li>Balance-checked</li>
+  </ul>
 
   <div id="drop" class="drop">
     <input type="file" id="file" accept="application/pdf,.pdf" hidden>
     <div class="drop-inner">
-      <div class="drop-icon">📄</div>
-      <div class="drop-title">Drop your PDF statement here</div>
-      <div class="drop-sub">or <button class="link" id="pick" type="button">choose a file</button> · nothing is uploaded</div>
+      <svg class="drop-art" viewBox="0 0 120 72" aria-hidden="true">
+        <rect x="6" y="6" width="44" height="58" rx="5" class="a-pdf"/>
+        <path d="M14 20h28M14 30h28M14 40h20" class="a-line"/>
+        <text x="28" y="57" class="a-tag">PDF</text>
+        <path d="M58 36h16m0 0-6-6m6 6-6 6" class="a-arrow"/>
+        <rect x="82" y="12" width="32" height="46" rx="4" class="a-xls"/>
+        <path d="M88 24h20M88 33h20M88 42h20M98 20v30" class="a-grid"/>
+      </svg>
+      <button class="bigbtn" id="pick" type="button">Choose PDF file</button>
+      <div class="drop-sub">or drop it here · your file stays on this computer</div>
     </div>
   </div>
+
   <div class="try">No statement handy? Try a sample:
     <button class="link" data-sample="tests/fixtures/us_checking.pdf">US checking account</button> ·
     <button class="link" data-sample="tests/fixtures/uk_current.pdf">UK current account</button> ·
     <button class="link" data-sample="tests/fixtures/credit_card.pdf">credit card</button>
+  </div>
+
+  <div class="preview" id="preview">
+    <div class="preview-label">This is what you get back</div>
+    <div class="preview-card">
+      <div class="chk good mini"><span class="ic">✓</span><span>Balance check passed - every amount adds up to the next balance.</span></div>
+      <table class="mini-table">
+        <thead><tr><th>Date</th><th>Description</th><th class="r">Amount</th><th class="r">Balance</th></tr></thead>
+        <tbody>
+          <tr><td>2026-01-03</td><td>POS PURCHASE WHOLE FOODS</td><td class="r neg">-84.19</td><td class="r">3,036.36</td></tr>
+          <tr><td>2026-01-05</td><td>ACH DEPOSIT PAYROLL</td><td class="r pos">2,450.00</td><td class="r">5,486.36</td></tr>
+          <tr><td>2026-01-08</td><td>ONLINE TRANSFER TO SAVINGS</td><td class="r neg">-500.00</td><td class="r">4,986.36</td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </section>
 
@@ -180,6 +206,6 @@
 <script src="vendor/pdf.min.js"></script>
 <script src="vendor/xlsx.full.min.js"></script>
 <script src="js/parse.js?v=8c067343"></script>
-<script src="js/app.js?v=d478bd90"></script>
+<script src="js/app.js?v=7dd9be6f"></script>
 </body>
 </html>

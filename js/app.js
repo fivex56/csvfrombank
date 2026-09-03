@@ -49,16 +49,21 @@
 
   function busy(msg) {
     var d = el('drop');
-    d.innerHTML = '<div class="drop-inner"><div class="drop-icon">⏳</div>' +
-      '<div class="drop-title">' + msg + '</div>' +
+    if (dropHTML === null) dropHTML = d.innerHTML;
+    d.innerHTML = '<div class="drop-inner"><div class="drop-icon" style="font-size:34px">⏳</div>' +
+      '<div class="drop-title" style="font-size:19px;font-weight:650;margin-top:10px">' + msg + '</div>' +
       '<div class="drop-sub">reading the file on your computer</div></div>';
   }
 
+  // Разметку зоны загрузки запоминаем при старте и возвращаем как была:
+  // раньше она пересобиралась строкой в коде, и любая правка вёрстки
+  // разъезжалась с тем, что видит человек после конвертации.
+  var dropHTML = null;
+
   function resetDrop() {
-    el('drop').innerHTML = '<div class="drop-inner"><div class="drop-icon">📄</div>' +
-      '<div class="drop-title">Drop your PDF statement here</div>' +
-      '<div class="drop-sub">or <button class="link" id="pick" type="button">choose a file</button> · nothing is uploaded</div></div>';
-    el('pick').onclick = function (e) { e.stopPropagation(); el('file').click(); };
+    if (dropHTML !== null) el('drop').innerHTML = dropHTML;
+    var pick = el('pick');
+    if (pick) pick.onclick = function (e) { e.stopPropagation(); el('file').click(); };
   }
 
   function handleFile(file) {
@@ -276,10 +281,29 @@
   };
   el('optInvert').onchange = function () { state.opts.invert = this.checked; run(); };
 
+  // Тема: по умолчанию светлая - так привычнее тем, кто весь день в таблицах.
+  // Выбор запоминается в самом браузере и никуда не отправляется.
+  (function () {
+    var btn = el('themeBtn');
+    var saved = null;
+    try { saved = localStorage.getItem('theme'); } catch (e) {}
+    function apply(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      if (btn) btn.textContent = t === 'dark' ? '☀' : '☾';
+    }
+    apply(saved === 'dark' ? 'dark' : 'light');
+    if (btn) btn.onclick = function () {
+      var now = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      apply(now);
+      try { localStorage.setItem('theme', now); } catch (e) {}
+    };
+  })();
+
   // Значок «работает офлайн» - показываем, что отсутствие сети ничего
   // не ломает. Это не украшение: это доказательство обещания.
   function net() {
     var t = el('netText');
+    if (!t) return;   // на новом первом экране этого значка нет
     t.textContent = navigator.onLine
       ? 'Runs entirely in your browser'
       : 'You are offline - and it still works';
