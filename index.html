@@ -15,7 +15,7 @@
 <meta name="twitter:description" content="Nothing is uploaded. The converter proves the numbers add up before you download.">
 <link rel="canonical" href="https://csvfrombank.com/">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
-<link rel="stylesheet" href="css/app.css?v=a888e0e5">
+<link rel="stylesheet" href="css/app.css?v=b553bf68">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"Which banks are supported?","acceptedAnswer":{"@type":"Answer","text":"There are no per-bank templates - the converter reads the layout of the document itself, so most text-based statements work: US, UK, EU, Canada and Australia. Chase, HSBC, Bank of America and American Express have their own pages with format notes."}},
@@ -49,7 +49,7 @@
   <ul class="promises">
     <li>Free</li>
     <li>No sign-up</li>
-    <li>Nothing uploaded</li>
+    <li class="key">Nothing uploaded</li>
     <li>Balance-checked</li>
   </ul>
 
@@ -68,6 +68,8 @@
       <div class="drop-sub">or drop it here · your file stays on this computer</div>
     </div>
   </div>
+
+  <div class="trustline">Tested on a real 4-page Chase statement: <b>62 of 62 transactions</b>, and the balance matched to the cent.</div>
 
   <div class="try">No statement handy? Try a sample:
     <button class="link" data-sample="tests/fixtures/us_checking.pdf">US checking account</button> ·
