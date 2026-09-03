@@ -229,7 +229,7 @@
       }
     }
 
-    if (!raw.length) return {rows: [], warnings: ['В файле не нашлось строк операций. Либо это скан-картинка, а не текстовый PDF, либо в файле просто нет таблицы операций.'], dateOrder: null, columns: null};
+    if (!raw.length) return {rows: [], warnings: ['No transaction rows were found in this file. Either it is a scan rather than a text PDF, or the file simply has no transaction table.'], dateOrder: null, columns: null};
 
     // 3) снимаем неоднозначность дат по всему документу:
     // если хоть где-то первое число больше 12 - формат день/месяц.
@@ -460,17 +460,17 @@
 
     // 7) предупреждения - честно говорим, чему не доверять
     const warnings = [];
-    if (balanceCol == null) warnings.push('Колонку «Остаток» найти не удалось - знаки сумм (плюс или минус) определены по расположению колонок и могут быть неточны. Проверьте несколько строк.');
-    else if (bestScore < 0.95) warnings.push('Остаток сходится не во всех строках (' + Math.round(bestScore * 100) + '%). Проверьте таблицу перед скачиванием.');
+    if (balanceCol == null) warnings.push('No running balance column was found, so the plus and minus signs are inferred from the column layout and may be wrong. Please spot-check a few rows.');
+    else if (bestScore < 0.95) warnings.push('The balance adds up on ' + Math.round(bestScore * 100) + '% of rows, not all of them. Please check the table before downloading.');
     if (balanceCol != null) {
       const withBal = rows.filter(r => r.balance != null).length;
       if (withBal < rows.length * 0.6) {
-        warnings.push('Остаток удалось прочитать только у ' + withBal + ' строк из ' + rows.length +
-          ' - в остальных знак суммы определён по расположению колонок.');
+        warnings.push('A balance was read on only ' + withBal + ' of ' + rows.length +
+          ' rows - on the rest, the sign of the amount comes from the column layout.');
       }
     }
-    if (rows.some(r => r.amount == null)) warnings.push('В части строк не удалось определить сумму.');
-    if (!defaultYear && rows.some(r => !/^\d{4}/.test(r.date))) warnings.push('В выписке нет года - в датах указаны только месяц и день.');
+    if (rows.some(r => r.amount == null)) warnings.push('The amount could not be determined on some rows.');
+    if (!defaultYear && rows.some(r => !/^\d{4}/.test(r.date))) warnings.push('This statement carries no year, so the dates show month and day only.');
 
     return {
       rows: rows,

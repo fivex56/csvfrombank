@@ -24,8 +24,7 @@ a:hover{text-decoration:underline}
 header.site{border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:10}
 .bar{display:flex;align-items:center;gap:24px;height:60px}
 .logo{font-weight:700;color:var(--ink);font-size:17px;display:flex;align-items:center;gap:8px}
-.logo .mark{display:inline-flex;width:28px;height:28px;border-radius:8px;background:var(--accent);
-  color:#fff;align-items:center;justify-content:center;font-size:15px}
+.logo .mark{display:block;width:30px;height:30px;border-radius:8px}
 header nav{margin-left:auto;display:flex;gap:20px;font-size:15px}
 header nav a{color:var(--dim)}
 
@@ -190,6 +189,11 @@ h1{font-size:40px;line-height:1.1;letter-spacing:-.8px;margin:0 auto 10px;max-wi
 .themebtn{margin-left:16px;background:var(--soft);border:1px solid var(--line);color:var(--ink);
   width:42px;height:42px;border-radius:9px;cursor:pointer;font-size:16px;line-height:1}
 .themebtn:hover{border-color:var(--dim)}
+.themebtn svg{width:19px;height:19px;display:block;margin:0 auto}
+.themebtn .i-moon{fill:var(--ink)}
+.themebtn .i-sun{display:none;fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round}
+:root[data-theme="dark"] .themebtn .i-moon{display:none}
+:root[data-theme="dark"] .themebtn .i-sun{display:block}
 
 @media(max-width:620px){
   h1{font-size:30px}
@@ -203,3 +207,39 @@ h1{font-size:40px;line-height:1.1;letter-spacing:-.8px;margin:0 auto 10px;max-wi
 }
 .trustline{max-width:720px;margin:14px auto 0;font-size:14.5px;color:var(--dim);text-align:center}
 .trustline b{color:var(--ink)}
+
+/* ============================================================
+   Смелая зона загрузки - приём Smallpdf (заливка во всю ширину),
+   но нашим цветом: на финансовой странице красный означает минус
+   и ошибку, поэтому он занят и в акцент не годится.
+   ============================================================ */
+.drop.bold{max-width:100%;background:var(--accent);border:0;padding:8px;border-radius:20px}
+.drop.bold .drop-inner{border:2px dashed rgba(255,255,255,.55);border-radius:14px;
+  padding:34px 20px 30px}
+.drop.bold:hover .drop-inner{border-color:rgba(255,255,255,.85);background:rgba(255,255,255,.06)}
+.drop.bold .drop-art .a-pdf,.drop.bold .drop-art .a-xls{fill:var(--accent);stroke:#fff}
+.drop.bold .drop-art .a-line,.drop.bold .drop-art .a-grid,
+.drop.bold .drop-art .a-arrow{stroke:#fff}
+.drop.bold .drop-art .a-tag{fill:#fff}
+.drop.bold .bigbtn{background:#fff;color:var(--accent);box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.drop.bold .bigbtn:hover{background:#f4f8ff}
+.drop.bold .drop-sub{color:rgba(255,255,255,.9)}
+.drop.bold .drop-title{color:#fff}
+
+/* Плитки преимуществ - есть у Smallpdf, FreePDFConvert и PDF24.
+   У нас в них наши доводы, а не общие слова про «быстро и удобно». */
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:24px 28px;margin-top:6px}
+@media(max-width:900px){.tiles{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.tiles{grid-template-columns:1fr;gap:20px}}
+.tile h3{font-size:16.5px;margin:12px 0 6px}
+.tile p{color:var(--dim);font-size:15px}
+.t-ic{width:30px;height:30px;fill:none;stroke:var(--accent);stroke-width:1.7;
+  stroke-linecap:round;stroke-linejoin:round;display:block}
+.t-ic .t-tick{stroke:var(--accent);opacity:.65}
+
+/* Что показать, когда распознать нечего: не пустую таблицу, а образец
+   удачного разбора и понятный совет, что делать дальше. */
+.empty-example{margin-top:6px}
+.ee-note{font-size:14px;color:var(--dim);margin-bottom:8px}
+.ee-help{margin-top:12px;background:var(--soft);border:1px solid var(--line);border-radius:10px;
+  padding:12px 14px;font-size:15px;color:var(--dim)}

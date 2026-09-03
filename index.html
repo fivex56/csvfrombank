@@ -14,8 +14,9 @@
 <meta name="twitter:title" content="Bank statement PDF to CSV - converted in your browser">
 <meta name="twitter:description" content="Nothing is uploaded. The converter proves the numbers add up before you download.">
 <link rel="canonical" href="https://csvfrombank.com/">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
-<link rel="stylesheet" href="css/app.css?v=b553bf68">
+<link rel="icon" type="image/svg+xml" href="img/icon.svg">
+<link rel="apple-touch-icon" href="img/icon.svg">
+<link rel="stylesheet" href="css/app.css?v=f535b1ee">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"Which banks are supported?","acceptedAnswer":{"@type":"Answer","text":"There are no per-bank templates - the converter reads the layout of the document itself, so most text-based statements work: US, UK, EU, Canada and Australia. Chase, HSBC, Bank of America and American Express have their own pages with format notes."}},
@@ -29,14 +30,16 @@
 
 <header class="site">
   <div class="wrap bar">
-    <a class="logo" href="#top"><span class="mark">⇄</span> CSV from Bank</a>
+    <a class="logo" href="#top"><img class="mark" src="img/logo.svg" width="32" height="32" alt=""> CSV from Bank</a>
     <nav>
       <a href="#how">How it works</a>
       <a href="#accuracy">Accuracy</a>
       <a href="#privacy">Privacy</a>
       <a href="#faq">FAQ</a>
     </nav>
-    <button class="themebtn" id="themeBtn" title="Switch light / dark" aria-label="Switch light or dark theme">☾</button>
+    <button class="themebtn" id="themeBtn" title="Switch light / dark" aria-label="Switch light or dark theme">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-moon" d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/><g class="i-sun"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.2 5.2l1.9 1.9M16.9 16.9l1.9 1.9M18.8 5.2l-1.9 1.9M7.1 16.9l-1.9 1.9"/></g></svg>
+    </button>
   </div>
 </header>
 
@@ -53,7 +56,7 @@
     <li>Balance-checked</li>
   </ul>
 
-  <div id="drop" class="drop">
+  <div id="drop" class="drop bold">
     <input type="file" id="file" accept="application/pdf,.pdf" hidden>
     <div class="drop-inner">
       <svg class="drop-art" viewBox="0 0 120 72" aria-hidden="true">
@@ -130,6 +133,22 @@
   <div class="tablewrap">
     <table id="tbl"></table>
   </div>
+
+  <div class="empty-example" id="emptyExample" hidden>
+    <div class="ee-note">When a statement is readable, the result looks like this:</div>
+    <div class="preview-card">
+      <div class="chk good mini"><span class="ic">✓</span><span>Balance check passed - every amount adds up to the next balance.</span></div>
+      <table class="mini-table">
+        <thead><tr><th>Date</th><th>Description</th><th class="r">Amount</th><th class="r">Balance</th></tr></thead>
+        <tbody>
+          <tr><td>2026-01-03</td><td>POS PURCHASE WHOLE FOODS</td><td class="r neg">-84.19</td><td class="r">3,036.36</td></tr>
+          <tr><td>2026-01-05</td><td>ACH DEPOSIT PAYROLL</td><td class="r pos">2,450.00</td><td class="r">5,486.36</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="ee-help">Most likely your file is a scan or a photo. Open your online banking and download the statement as a PDF - that version carries the text this tool needs.</div>
+  </div>
+
   <div class="rfoot" id="rfoot"></div>
 </section>
 
@@ -143,6 +162,42 @@
     <a href="bank/bank-of-america.html">Bank of America</a> ·
     <a href="bank/amex.html">American Express</a>
   </p>
+</section>
+
+<section class="wrap band">
+  <h2>Why people use it</h2>
+  <div class="tiles">
+    <div class="tile">
+      <svg viewBox="0 0 24 24" class="t-ic" aria-hidden="true"><path d="M12 2.5l7.5 3v5.7c0 4.6-3.1 8.5-7.5 9.8-4.4-1.3-7.5-5.2-7.5-9.8V5.5z"/><path d="M8.8 12.2l2.2 2.2 4.2-4.4" class="t-tick"/></svg>
+      <h3>Nothing is uploaded</h3>
+      <p>The conversion runs inside your browser. Turn off your internet and it still works - there is no server to send your statement to.</p>
+    </div>
+    <div class="tile">
+      <svg viewBox="0 0 24 24" class="t-ic" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M7.5 9.5h9M7.5 13h9M7.5 16.5h5" class="t-tick"/></svg>
+      <h3>It checks its own maths</h3>
+      <p>Every row must add up to the next balance. If that chain holds top to bottom, nothing was dropped or double-counted - and you see the result before you download.</p>
+    </div>
+    <div class="tile">
+      <svg viewBox="0 0 24 24" class="t-ic" aria-hidden="true"><circle cx="12" cy="8.5" r="3.6"/><path d="M4.8 20c0-3.6 3.2-5.6 7.2-5.6s7.2 2 7.2 5.6" class="t-tick"/></svg>
+      <h3>No account, no email</h3>
+      <p>No sign-up, no password, no newsletter. Open the page, drop the file, take the spreadsheet.</p>
+    </div>
+    <div class="tile">
+      <svg viewBox="0 0 24 24" class="t-ic" aria-hidden="true"><path d="M3.5 9.5L12 4l8.5 5.5"/><path d="M5.5 10.5v8.5h13v-8.5M9.5 19v-5h5v5" class="t-tick"/></svg>
+      <h3>Works with any bank</h3>
+      <p>There are no per-bank templates. The converter reads the layout of the document itself, so statements from the US, UK, EU, Canada and beyond all work.</p>
+    </div>
+    <div class="tile">
+      <svg viewBox="0 0 24 24" class="t-ic" aria-hidden="true"><rect x="4" y="3.5" width="16" height="17" rx="2.5"/><path d="M4 9h16M12 9v11.5" class="t-tick"/></svg>
+      <h3>Excel, CSV or QuickBooks</h3>
+      <p>Take a full spreadsheet with balances, a plain CSV, or the narrow three-column file that QuickBooks and Xero accept for import.</p>
+    </div>
+    <div class="tile">
+      <svg viewBox="0 0 24 24" class="t-ic" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v9M9.3 10c0-1.4 1.2-2.2 2.7-2.2s2.7.8 2.7 2.2-1.3 1.8-2.7 2-2.7.7-2.7 2.1 1.2 2.2 2.7 2.2 2.7-.8 2.7-2.2" class="t-tick"/></svg>
+      <h3>Free while in early access</h3>
+      <p>No card, no trial countdown. Later it will be pay-per-file rather than a subscription, because most people need this a few times a year.</p>
+    </div>
+  </div>
 </section>
 
 <section id="accuracy" class="wrap band">
@@ -207,7 +262,7 @@
 
 <script src="vendor/pdf.min.js"></script>
 <script src="vendor/xlsx.full.min.js"></script>
-<script src="js/parse.js?v=8c067343"></script>
-<script src="js/app.js?v=7dd9be6f"></script>
+<script src="js/parse.js?v=db26670b"></script>
+<script src="js/app.js?v=9c27cc70"></script>
 </body>
 </html>

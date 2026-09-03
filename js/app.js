@@ -132,10 +132,9 @@
         ? {k: 'good', ic: '✓', t: 'Balance check passed - every amount adds up to the next balance, from ' + money(rows.find(function(r){return r.balance!=null;}).balance) + ' to ' + money(rows.filter(function(r){return r.balance!=null;}).pop().balance) + '.'}
         : {k: 'bad', ic: '!', t: 'Balance check failed - the amounts add up to ' + money(totals.actual) + ' but the balance moved by ' + money(totals.expected) + '. Check the rows below, or adjust the settings.'});
     }
-    (res.warnings || []).forEach(function (w) { checks.push({k: 'warn', ic: '!', t: w}); });
-    if (!rows.length) {
-      checks.push({k: 'bad', ic: '!', t: 'No transaction rows were found. If your statement is a scan or a photo, this tool cannot read it yet - download the PDF version from online banking instead.'});
-    }
+    (res.warnings || []).forEach(function (w) {
+      checks.push({k: rows.length ? 'warn' : 'bad', ic: '!', t: w});
+    });
     el('checks').innerHTML = checks.map(function (c) {
       return '<div class="chk ' + c.k + '"><span class="ic">' + c.ic + '</span><span>' + c.t + '</span></div>';
     }).join('');
@@ -160,7 +159,23 @@
         '</td><td class="num ' + cls + '">' + money(r.amount) +
         '</td><td class="num">' + money(r.balance) + '</td></tr>';
     }).join('');
-    el('tbl').innerHTML = head + '<tbody>' + body + '</tbody>';
+    var wrap = document.querySelector('.tablewrap');
+    var actions = document.querySelector('.ractions');
+    var ex = el('emptyExample');
+    if (!rows.length) {
+      // Пустая таблица с одними заголовками читается как поломка сайта.
+      // Вместо неё показываем, как выглядит удачный разбор, и прячем
+      // кнопки скачивания - качать всё равно нечего.
+      if (wrap) wrap.hidden = true;
+      if (actions) actions.hidden = true;
+      if (ex) ex.hidden = false;
+      el('tbl').innerHTML = '';
+    } else {
+      if (wrap) wrap.hidden = false;
+      if (actions) actions.hidden = false;
+      if (ex) ex.hidden = true;
+      el('tbl').innerHTML = head + '<tbody>' + body + '</tbody>';
+    }
 
     var sum = rows.reduce(function (a, r) { return a + (r.amount || 0); }, 0);
     var inflow = rows.filter(function (r) { return r.amount > 0; }).reduce(function (a, r) { return a + r.amount; }, 0);
