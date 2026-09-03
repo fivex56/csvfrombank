@@ -257,3 +257,46 @@ h1{font-size:40px;line-height:1.1;letter-spacing:-.8px;margin:0 auto 10px;max-wi
   font-size:15.5px;margin-bottom:10px}
 .flogo img{border-radius:7px}
 footer .fine.bottom{border-top:1px solid var(--line);padding-top:16px}
+
+/* ============================================================
+   Телефон: шапка в одну строку - логотип слева, кнопка темы справа.
+   Пункты меню на телефоне убраны из шапки: они дублируются в подвале,
+   а в две строки шапка «плыла» (замечание Кирилла с айфона).
+   ============================================================ */
+@media(max-width:620px){
+  .bar{height:56px;padding:0 16px;gap:10px;flex-wrap:nowrap;justify-content:space-between}
+  header nav{display:none}
+  .themebtn{margin-left:auto;width:40px;height:40px}
+  .promises{gap:8px 14px}
+  .promises li{font-size:13.5px}
+  .trustline{font-size:13.5px}
+  .try{font-size:13.5px;line-height:1.7}
+}
+
+/* Переход по пунктам меню: липкая шапка перекрывала начало раздела,
+   и заголовок обрезался. Каждому разделу - запас сверху под шапку. */
+section[id],main[id]{scroll-margin-top:76px}
+@media(max-width:620px){section[id],main[id]{scroll-margin-top:68px}}
+html{scroll-behavior:smooth}
+
+/* Сообщение внутри зоны загрузки - вместо всплывающего окна браузера */
+.drop-msg{margin-top:12px;display:inline-block;background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:10px;padding:10px 14px;
+  font-size:14.5px;max-width:560px;text-align:left}
+.drop-msg b{display:block;margin-bottom:2px}
+:root[data-theme="light"] .drop:not(.bold) .drop-msg{background:var(--bad-bg);color:var(--bad);border-color:transparent}
+
+/* Атрибут hidden должен побеждать любые наши display - иначе кнопки
+   скачивания оставались на экране при нераспознанном файле. */
+[hidden]{display:none!important}
+
+/* Кнопки результата на телефоне: сетка два на два вместо трёх рваных рядов */
+@media(max-width:620px){
+  .rhead{flex-direction:column;align-items:stretch}
+  .ractions{margin-left:0;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .ractions .btn{width:100%;padding:12px 8px;font-size:14.5px;white-space:nowrap}
+}
+
+/* Длинные заголовки не должны вылезать за экран телефона */
+h1{overflow-wrap:anywhere}
+@media(max-width:620px){.nowrap{white-space:normal}}

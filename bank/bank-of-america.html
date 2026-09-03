@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="CSV from Bank">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128202;</text></svg>">
-<link rel="stylesheet" href="../css/app.css?v=c47109bf">
+<link rel="stylesheet" href="../css/app.css?v=1875c15c">
 </head>
 <body>
 
@@ -25,28 +25,51 @@
       <a href="../index.html#privacy">Privacy</a>
       <a href="../index.html#faq">FAQ</a>
     </nav>
+    <button class="themebtn" id="themeBtn" title="Switch light / dark" aria-label="Switch light or dark theme">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-moon" d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/><g class="i-sun"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.2 5.2l1.9 1.9M16.9 16.9l1.9 1.9M18.8 5.2l-1.9 1.9M7.1 16.9l-1.9 1.9"/></g></svg>
+    </button>
   </div>
 </header>
 
 <main id="top">
 
 <section class="hero wrap">
-  <div class="badge" id="netBadge"><span class="dot"></span> <span id="netText">Runs entirely in your browser</span></div>
-  <h1 class="wide">Convert a Bank of America statement PDF to Excel or CSV <span class="nowrap">without uploading it</span></h1>
-  <p class="lede">Bank of America statements arrive as PDF, split into deposits, withdrawals and fees. This page turns them into one clean table in your browser - the file stays on your computer.</p>
+  <h1>Bank of America Statement to Excel or CSV</h1>
+  <p class="sub">Convert your Bank of America PDF right in your browser - it never leaves your computer.</p>
 
-  <div id="drop" class="drop">
+  <ul class="promises">
+    <li>Free</li>
+    <li>No sign-up</li>
+    <li class="key">Nothing uploaded</li>
+    <li>Balance-checked</li>
+  </ul>
+
+  <div id="drop" class="drop bold">
     <input type="file" id="file" accept="application/pdf,.pdf" hidden>
     <div class="drop-inner">
-      <div class="drop-icon">&#128196;</div>
-      <div class="drop-title">Drop your Bank of America statement here</div>
-      <div class="drop-sub">or <button class="link" id="pick" type="button">choose a file</button> &middot; nothing is uploaded</div>
+      <svg class="drop-art" viewBox="0 0 120 72" aria-hidden="true">
+        <rect x="6" y="6" width="44" height="58" rx="5" class="a-pdf"/>
+        <path d="M14 20h28M14 30h28M14 40h20" class="a-line"/>
+        <text x="28" y="57" class="a-tag">PDF</text>
+        <path d="M58 36h16m0 0-6-6m6 6-6 6" class="a-arrow"/>
+        <rect x="82" y="12" width="32" height="46" rx="4" class="a-xls"/>
+        <path d="M88 24h20M88 33h20M88 42h20M98 20v30" class="a-grid"/>
+      </svg>
+      <button class="bigbtn" id="pick" type="button">Choose Bank of America PDF</button>
+      <div class="drop-sub">or drop it here &middot; your file stays on this computer</div>
     </div>
   </div>
+
+  <div class="trustline">Tested on the official Bank of America sample statement: transaction rows are picked up, and the converter says plainly that there is no running balance to verify against rather than pretending it is sure.</div>
+
   <div class="try">No Bank of America statement handy? Try a sample:
     <button class="link" data-sample="../tests/fixtures/us_checking.pdf">US checking account</button> &middot;
     <button class="link" data-sample="../tests/fixtures/uk_current.pdf">UK current account</button>
   </div>
+</section>
+
+<section class="wrap band" style="padding-top:26px">
+  <p class="lede">Bank of America statements arrive as PDF, split into deposits, withdrawals and fees. This page turns them into one clean table in your browser - the file stays on your computer.</p>
 </section>
 
 <section id="result" class="wrap result" hidden>
@@ -58,8 +81,8 @@
     <div class="ractions">
       <button class="btn primary" id="dlXlsx">Download Excel</button>
       <button class="btn" id="dlCsv">Download CSV</button>
-      <button class="btn" id="dlQbo">CSV for QuickBooks</button>
-      <button class="btn ghost" id="again">Convert another</button>
+      <button class="btn" id="dlQbo">Download for QuickBooks</button>
+      <button class="btn ghost" id="again">Convert another file</button>
     </div>
   </div>
   <div id="checks" class="checks"></div>
@@ -81,6 +104,16 @@
     </div>
   </details>
   <div class="tablewrap"><table id="tbl"></table></div>
+  <div class="empty-example" id="emptyExample" hidden>
+    <div class="ee-note">When a statement is readable, the result looks like this:</div>
+    <div class="preview-card">
+      <div class="chk good mini"><span class="ic">&#10003;</span><span>Balance check passed - every amount adds up to the next balance.</span></div>
+      <table class="mini-table"><thead><tr><th>Date</th><th>Description</th><th class="r">Amount</th><th class="r">Balance</th></tr></thead>
+      <tbody><tr><td>2026-01-03</td><td>POS PURCHASE WHOLE FOODS</td><td class="r neg">-84.19</td><td class="r">3,036.36</td></tr>
+      <tr><td>2026-01-05</td><td>ACH DEPOSIT PAYROLL</td><td class="r pos">2,450.00</td><td class="r">5,486.36</td></tr></tbody></table>
+    </div>
+    <div class="ee-help">If your file is a scan or a photo, the PDF from your online banking is the version that will work here.</div>
+  </div>
   <div class="rfoot" id="rfoot"></div>
 </section>
 
@@ -122,8 +155,8 @@
 
 <script src="../vendor/pdf.min.js"></script>
 <script src="../vendor/xlsx.full.min.js"></script>
-<script src="../js/parse.js?v=cd44366e"></script>
+<script src="../js/parse.js?v=3be90c41"></script>
 <script>window.APP_BASE = '../';</script>
-<script src="../js/app.js?v=acb098ab"></script>
+<script src="../js/app.js?v=f6d8e26c"></script>
 </body>
 </html>

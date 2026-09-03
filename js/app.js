@@ -66,10 +66,29 @@
     if (pick) pick.onclick = function (e) { e.stopPropagation(); el('file').click(); };
   }
 
+  function showDropMessage(title, text) {
+    resetDrop();
+    var inner = el('drop').querySelector('.drop-inner');
+    if (!inner) return;
+    var old = inner.querySelector('.drop-msg');
+    if (old) old.remove();
+    var m = document.createElement('div');
+    m.className = 'drop-msg';
+    m.innerHTML = '<b>' + escapeHtml(title) + '</b>' + escapeHtml(text);
+    inner.appendChild(m);
+  }
+
   function handleFile(file) {
     if (!file) return;
-    if (file.type && file.type.indexOf('pdf') === -1 && !/\.pdf$/i.test(file.name)) {
-      alert('This looks like it is not a PDF. Download the PDF version of your statement from online banking.');
+    var looksPdf = /\.pdf$/i.test(file.name) || (file.type && file.type.indexOf('pdf') !== -1);
+    if (!looksPdf) {
+      showDropMessage('That file is not a PDF.',
+        'This tool reads PDF statements only. Open your online banking and download the statement as a PDF, then drop it here.');
+      return;
+    }
+    if (file.size === 0) {
+      showDropMessage('This PDF is empty.',
+        'The file has no content at all (0 bytes). Download the statement again from your online banking and try once more.');
       return;
     }
     state.name = file.name.replace(/\.pdf$/i, '');
@@ -82,8 +101,10 @@
         run();
         resetDrop();
       }).catch(function (err) {
-        resetDrop();
-        alert('Could not open this PDF: ' + err.message);
+        var why = /password|encrypt/i.test(err.message)
+          ? 'The file is password-protected. Remove the password in your PDF viewer and try again.'
+          : 'The file could not be opened as a PDF. It may be damaged or not a real PDF. Download it again from your online banking and try once more.';
+        showDropMessage('Could not open this file.', why);
       });
     };
     fr.readAsArrayBuffer(file);
@@ -96,7 +117,7 @@
       return textItems(new Uint8Array(buf));
     }).then(function (items) {
       state.items = items; state.opts = {}; run(); resetDrop();
-    }).catch(function (e) { resetDrop(); alert('Sample failed to load: ' + e.message); });
+    }).catch(function (e) { showDropMessage('Sample did not load.', 'Please try again in a moment.'); });
   }
 
   // ---------- разбор и показ ----------
@@ -115,6 +136,7 @@
   function render(res) {
     var rows = res.rows;
     el('result').hidden = false;
+    if (el('preview')) el('preview').hidden = true;
 
     el('rtitle').textContent = rows.length ? rows.length + ' transactions found' : 'Could not read this statement';
     var span = '';
@@ -152,12 +174,15 @@
     if (res.dateOrder && !el('optDate').value) el('optDate').selectedIndex = res.dateOrder === 'DM' ? 2 : 1;
 
     // таблица
-    var head = '<thead><tr><th>Date</th><th>Description</th><th style="text-align:right">Amount</th><th style="text-align:right">Balance</th></tr></thead>';
+    var hasBalance = rows.some(function (r) { return r.balance != null; });
+    state.hasBalance = hasBalance;
+    var head = '<thead><tr><th>Date</th><th>Description</th><th style="text-align:right">Amount</th>' +
+      (hasBalance ? '<th style="text-align:right">Balance</th>' : '') + '</tr></thead>';
     var body = rows.map(function (r) {
       var cls = r.amount == null ? '' : (r.amount < 0 ? 'neg' : 'pos');
       return '<tr><td class="date">' + r.date + '</td><td>' + escapeHtml(r.description) +
-        '</td><td class="num ' + cls + '">' + money(r.amount) +
-        '</td><td class="num">' + money(r.balance) + '</td></tr>';
+        '</td><td class="num ' + cls + '">' + money(r.amount) + '</td>' +
+        (hasBalance ? '<td class="num">' + money(r.balance) + '</td>' : '') + '</tr>';
     }).join('');
     var wrap = document.querySelector('.tablewrap');
     var actions = document.querySelector('.ractions');
@@ -201,9 +226,12 @@
 
   function tableData() {
     var rows = state.result ? state.result.rows : [];
-    var out = [['Date', 'Description', 'Amount', 'Balance']];
+    var withBal = rows.some(function (r) { return r.balance != null; });
+    var out = [withBal ? ['Date', 'Description', 'Amount', 'Balance'] : ['Date', 'Description', 'Amount']];
     rows.forEach(function (r) {
-      out.push([r.date, r.description, r.amount == null ? '' : r.amount, r.balance == null ? '' : r.balance]);
+      var line = [r.date, r.description, r.amount == null ? '' : r.amount];
+      if (withBal) line.push(r.balance == null ? '' : r.balance);
+      out.push(line);
     });
     return out;
   }
@@ -255,7 +283,7 @@
   function downloadXlsx() {
     if (!canDownload()) return;
     var ws = XLSX.utils.aoa_to_sheet(tableData());
-    ws['!cols'] = [{wch: 12}, {wch: 52}, {wch: 14}, {wch: 14}];
+    ws['!cols'] = state.hasBalance ? [{wch: 12}, {wch: 52}, {wch: 14}, {wch: 14}] : [{wch: 12}, {wch: 52}, {wch: 14}];
     var wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Transactions');
     XLSX.writeFile(wb, state.name + '.xlsx');
@@ -273,7 +301,9 @@
   drop.addEventListener('drop', function (e) {
     if (e.dataTransfer.files && e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
   });
-  el('file').addEventListener('change', function (e) { handleFile(e.target.files[0]); });
+  document.addEventListener('change', function (e) {
+    if (e.target && e.target.id === 'file') handleFile(e.target.files[0]);
+  });
   el('pick').onclick = function (e) { e.stopPropagation(); el('file').click(); };
 
   document.querySelectorAll('[data-sample]').forEach(function (b) {
@@ -285,6 +315,7 @@
   if (el('dlQbo')) el('dlQbo').onclick = downloadQuickBooks;
   el('again').onclick = function () {
     el('result').hidden = true;
+    if (el('preview')) el('preview').hidden = false;
     state.items = null; state.result = null;
     window.scrollTo({top: 0, behavior: 'smooth'});
   };
