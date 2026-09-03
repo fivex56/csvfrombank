@@ -300,3 +300,28 @@ html{scroll-behavior:smooth}
 /* Длинные заголовки не должны вылезать за экран телефона */
 h1{overflow-wrap:anywhere}
 @media(max-width:620px){.nowrap{white-space:normal}}
+
+/* ============================================================
+   Таблица результата на телефоне. Четыре колонки в 375 пикселей не влезают:
+   остаток уезжал за край, а описание рвалось на четыре строки. Поэтому
+   на узком экране каждая операция - карточка: дата и сумма в одну строку,
+   описание под ними, остаток мелко снизу. Данные те же, разметка та же.
+   ============================================================ */
+@media(max-width:620px){
+  .tablewrap{max-height:none;overflow:visible;box-shadow:none;border-radius:12px}
+  #tbl thead{display:none}
+  #tbl,#tbl tbody{display:block;width:100%}
+  #tbl tr{display:grid;grid-template-columns:1fr auto;grid-template-areas:"date amount" "desc desc" "bal bal";
+    column-gap:12px;row-gap:2px;padding:11px 14px;border-bottom:1px solid var(--line)}
+  #tbl tr:last-child{border-bottom:0}
+  #tbl td{display:block;padding:0;border:0;white-space:normal}
+  #tbl td.date{grid-area:date;font-size:12.5px;color:var(--dim);align-self:center}
+  #tbl td:nth-child(2){grid-area:desc;font-size:14.5px;line-height:1.35;color:var(--ink)}
+  #tbl td:nth-child(3){grid-area:amount;text-align:right;font-size:16px;font-weight:650;align-self:center}
+  #tbl td:nth-child(4){grid-area:bal;font-size:12.5px;color:var(--dim);text-align:left;margin-top:2px}
+  #tbl td:nth-child(4):not(:empty):before{content:"Balance ";}
+  .rfoot{font-size:13.5px;line-height:1.7}
+  .checks .chk{font-size:14px}
+  /* пример на главной - тоже без четвёртой колонки и без переполнения */
+  .mini-table th,.mini-table td{padding:8px 10px;font-size:13px}
+}
