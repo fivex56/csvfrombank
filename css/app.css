@@ -76,7 +76,7 @@ h1{font-size:42px;line-height:1.15;letter-spacing:-1px;margin:18px auto 14px;max
   background:var(--bg);color:var(--ink);min-width:190px}
 .tune-note{flex-basis:100%;font-size:13.5px;color:var(--dim)}
 
-.tablewrap{border:1px solid var(--line);border-radius:12px;overflow:auto;max-height:62vh;box-shadow:var(--shadow)}
+.tablewrap{border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
 table{width:100%;border-collapse:collapse;font-size:14.5px}
 thead th{position:sticky;top:0;background:var(--soft);z-index:1;text-align:left;font-size:12px;
   text-transform:uppercase;letter-spacing:.06em;color:var(--dim);padding:10px 12px;border-bottom:1px solid var(--line)}
