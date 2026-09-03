@@ -325,3 +325,9 @@ h1{overflow-wrap:anywhere}
   /* пример на главной - тоже без четвёртой колонки и без переполнения */
   .mini-table th,.mini-table td{padding:8px 10px;font-size:13px}
 }
+
+/* даты в мини-таблицах не переносятся на две строки */
+.mini-table td:first-child,.mini-table th:first-child{white-space:nowrap}
+
+/* на узких экранах (iPhone SE и уже) четыре кнопки результата - в один столбец, иначе правая пара уезжает за край */
+@media(max-width:400px){.ractions{grid-template-columns:1fr}.ractions .btn{min-width:0}}
