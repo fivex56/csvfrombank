@@ -16,7 +16,7 @@
 <link rel="canonical" href="https://csvfrombank.com/">
 <link rel="icon" type="image/svg+xml" href="img/icon.svg">
 <link rel="apple-touch-icon" href="img/icon.svg">
-<link rel="stylesheet" href="css/app.css?v=f535b1ee">
+<link rel="stylesheet" href="css/app.css?v=c47109bf">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"Which banks are supported?","acceptedAnswer":{"@type":"Answer","text":"There are no per-bank templates - the converter reads the layout of the document itself, so most text-based statements work: US, UK, EU, Canada and Australia. Chase, HSBC, Bank of America and American Express have their own pages with format notes."}},
@@ -105,8 +105,8 @@
     <div class="ractions">
       <button class="btn primary" id="dlXlsx">Download Excel</button>
       <button class="btn" id="dlCsv">Download CSV</button>
-      <button class="btn" id="dlQbo">CSV for QuickBooks</button>
-      <button class="btn ghost" id="again">Convert another</button>
+      <button class="btn" id="dlQbo">Download for QuickBooks</button>
+      <button class="btn ghost" id="again">Convert another file</button>
     </div>
   </div>
 
@@ -222,9 +222,9 @@
 <section id="how" class="wrap band">
   <h2>How it works</h2>
   <div class="cols3">
-    <div><div class="step">1</div><h3>Pick your PDF</h3><p>Any text-based statement - the kind you download from online banking. Scans and photos are not supported yet.</p></div>
-    <div><div class="step">2</div><h3>Check the table</h3><p>Every row is on screen before you pay anything, together with the balance check.</p></div>
-    <div><div class="step">3</div><h3>Download</h3><p>Excel, plain CSV, or the narrow CSV that QuickBooks and Xero accept for import.</p></div>
+    <div><div class="step">1</div><h3>Drop the PDF</h3><p>Use the statement your bank gives you in online banking. Text PDFs work. Scans and photos do not - not yet.</p></div>
+    <div><div class="step">2</div><h3>Read the table</h3><p>Every row appears on screen, with a plain note on whether the balance adds up. Nothing is sent anywhere to make that happen.</p></div>
+    <div><div class="step">3</div><h3>Take the file</h3><p>Excel with balances, a plain CSV, or the three-column CSV that QuickBooks and Xero import.</p></div>
   </div>
 </section>
 
@@ -255,14 +255,38 @@
 
 <footer class="site">
   <div class="wrap">
-    <p>CSV from Bank - convert bank statement PDFs to CSV and Excel without uploading them.</p>
-    <p class="fine">Not affiliated with any bank. Always check the converted numbers against your original statement before using them for accounting or tax.</p>
+    <div class="fcols">
+      <div>
+        <div class="flogo"><img src="img/logo.svg" width="26" height="26" alt=""> CSV from Bank</div>
+        <p class="fine">Bank statement PDFs into spreadsheets, converted in your browser. Nothing is uploaded, and the numbers are checked against the balance before you download.</p>
+      </div>
+      <div>
+        <h2>The tool</h2>
+        <a href="#how">How it works</a>
+        <a href="#accuracy">How accuracy is checked</a>
+        <a href="#privacy">What happens to your file</a>
+        <a href="#faq">Questions</a>
+      </div>
+      <div>
+        <h2>By bank</h2>
+        <a href="bank/chase.html">Chase</a>
+        <a href="bank/hsbc.html">HSBC</a>
+        <a href="bank/bank-of-america.html">Bank of America</a>
+        <a href="bank/amex.html">American Express</a>
+      </div>
+      <div>
+        <h2>Good to know</h2>
+        <p class="fine">Free while in early access. No account and no email required.</p>
+        <p class="fine">Scanned statements are not supported yet.</p>
+      </div>
+    </div>
+    <p class="fine bottom">Not affiliated with any bank. Bank names are trademarks of their owners. Always check the converted numbers against your original statement before using them for accounting or tax.</p>
   </div>
 </footer>
 
 <script src="vendor/pdf.min.js"></script>
 <script src="vendor/xlsx.full.min.js"></script>
-<script src="js/parse.js?v=db26670b"></script>
-<script src="js/app.js?v=9c27cc70"></script>
+<script src="js/parse.js?v=cd44366e"></script>
+<script src="js/app.js?v=acb098ab"></script>
 </body>
 </html>

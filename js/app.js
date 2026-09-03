@@ -116,7 +116,7 @@
     var rows = res.rows;
     el('result').hidden = false;
 
-    el('rtitle').textContent = rows.length ? rows.length + ' transactions found' : 'Nothing recognised';
+    el('rtitle').textContent = rows.length ? rows.length + ' transactions found' : 'Could not read this statement';
     var span = '';
     if (rows.length) {
       var d1 = rows[0].date, d2 = rows[rows.length - 1].date;

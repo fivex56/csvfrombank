@@ -229,7 +229,7 @@
       }
     }
 
-    if (!raw.length) return {rows: [], warnings: ['No transaction rows were found in this file. Either it is a scan rather than a text PDF, or the file simply has no transaction table.'], dateOrder: null, columns: null};
+    if (!raw.length) return {rows: [], warnings: ['No transaction rows were found in this file. It is most likely a scan rather than a text PDF. Open your online banking and download the statement as a PDF - that version carries the text this tool needs.'], dateOrder: null, columns: null};
 
     // 3) снимаем неоднозначность дат по всему документу:
     // если хоть где-то первое число больше 12 - формат день/месяц.
